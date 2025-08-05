@@ -19,6 +19,17 @@
         .prose-purple a:hover {
             color: #7e22ce;
         }
+        /* Added to style AI-generated HTML */
+        .prose-purple h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #c084fc; /* purple-400 */
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .prose-purple p {
+            margin-bottom: 1rem;
+        }
         .timeline-item.selected {
             background-color: #6b21a8;
             color: white;
@@ -577,7 +588,8 @@
                     { q: "Fine de la Marne is typically aged in oak barrels, making it smoother and more refined than what other local spirit?", a: "Marc de Champagne", o: ["Ratafia Champenois", "Local gin", "Absinthe"], subjectType: "beverage", subjectName: "Fine de la Marne" },
                     { q: "The lack of what ingredient gives Boudin Blanc de Rethel its characteristically fine texture?", a: "Breadcrumbs or starches", o: ["Pork fat", "Herbs and spices", "Garlic"], subjectType: "ingredient", subjectName: "Boudin Blanc de Rethel" },
                     { q: "Which term best describes the flavor profile of Andouillette de Troyes?", a: "Assertive", o: ["Delicate", "Sweet", "Mild"], subjectType: "ingredient", subjectName: "Andouillette de Troyes" },
-                    { q: "The concave top of a Langres cheese is also known by what French term?", a: "Fontaine", o: ["Puits", "Creux", "Cave"], subjectType: "ingredient", "subjectName": "Langres Cheese" },
+                    // FIX: Corrected the syntax from "subjectName" to subjectName
+                    { q: "The concave top of a Langres cheese is also known by what French term?", a: "Fontaine", o: ["Puits", "Creux", "Cave"], subjectType: "ingredient", subjectName: "Langres Cheese" },
                     { q: "The red fruit character of a rosé Champagne allows it to pair with more substantial dishes, such as what type of poultry?", a: "Game birds like quail", o: ["Fried chicken", "Boiled chicken", "Smoked turkey"], subjectType: "wine_pairing", subjectName: "Rosé Champagne Pairings" },
                     { q: "A non-vintage brut or blanc de blancs is considered a classic pairing for what type of small, savory pastry?", a: "Gougères", o: ["Macarons", "Canelés", "Profiteroles"], subjectType: "wine_pairing", subjectName: "Brut Champagne Pairings" },
                     { q: "What is the PDO status of Chaource cheese?", a: "Protected Designation of Origin", o: ["Protected Geographical Indication", "Appellation d'Origine Contrôlée", "Traditional Speciality Guaranteed"], subjectType: "ingredient", subjectName: "Chaource Cheese" },
@@ -857,7 +869,7 @@
 
         function showEndGameModal() {
             const moduleData = gameData[currentModule];
-            const questionCount = questions.length; // FIX: Always use the actual length of the questions array
+            const questionCount = questions.length;
             const content = `
                 <div class="p-6 text-center">
                     <h2 class="text-2xl font-bold mb-4 text-purple-400">Module Complete!</h2>
@@ -1362,6 +1374,7 @@
             let title;
             const region = "Champagne";
 
+            // FIX: Corrected the broken switch statement structure and prompts.
             switch (subjectType) {
                 case 'clone':
                 case 'grape':
@@ -1385,7 +1398,8 @@
                 case 'ingredient':
                 case 'gastronomy':
                     title = `Ingredient Focus: ${subjectName}`;
-                    prompt = `You are a food and wine expert specializing in the cuisine of ${region}. Your task is to provide a detailed overview of the ingredient: ${subjectName}. Your response must follow this strict pyramid of importance: 1. How this ingredient is used in the local
+                    prompt = `You are a food and wine expert specializing in the cuisine of ${region}. Your task is to provide a detailed overview of the ingredient: ${subjectName}. Your response must follow this strict pyramid of importance: 1. How this ingredient is used in the local cuisine of ${region}. 2. Its history and cultural significance in ${region}. 3. Classic pairings with the wines of ${region}. Synthesize information from authoritative sources, but frame your entire response within the context of ${region}. Format in simple HTML using <h4> for headers and <p> for paragraphs.`;
+                    break;
                 case 'beverage':
                     title = `Beverage Profile: ${subjectName}`;
                     prompt = `You are an expert on the spirits and liqueurs of France, with a specialization in ${region}. Your task is to provide a detailed overview of ${subjectName}. Your response must follow this strict pyramid of importance: 1. How ${subjectName} is made and consumed specifically within ${region}. 2. Its key ingredients and typical flavor profile. 3. Its cultural significance in ${region}. Do not focus on wine pairings unless it is a key part of its consumption. Synthesize information from authoritative sources. Format in simple HTML.`;
@@ -1427,7 +1441,8 @@
                                 <h2 class="text-2xl font-bold text-purple-400">${title}</h2>
                                 <button onclick="hideModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
                             </div>
-                            <div class="prose prose-invert prose-purple max-w-none">${text.replace(/\n/g, '<br>')}</div>
+                            // FIX: Removed .replace() to allow the AI's HTML formatting to render correctly.
+                            <div class="prose prose-invert prose-purple max-w-none">${text}</div>
                         </div>`;
                     showModal(aiContent);
                 } else {
